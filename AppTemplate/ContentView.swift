@@ -12,26 +12,13 @@ struct ContentView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
 
     var body: some View {
-        NavigationView { // Add NavigationView for title and toolbar
-            VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                    .foregroundStyle(.tint)
-                
-                // Display user email if available
-                if let email = authViewModel.currentUser?.email {
-                    Text("Logged in as: \(email)")
-                        .padding(.top)
-                } else {
-                    Text("Welcome!")
-                        .padding(.top)
-                }
-
-                Spacer() // Push logout to toolbar
-            }
-            .padding()
-            .navigationTitle("Main Content") // Add a title
-            .toolbar { // Add a toolbar for the logout button
+        NavigationView { // Keep NavigationView for title and toolbar
+            // Replace the VStack content with GameView
+            GameView()
+            // Remove padding that was applied to the old VStack
+            .navigationTitle("Chess Game") // Update title to be more specific
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { // Keep the toolbar for the logout button
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Log Out") {
                         authViewModel.signOut()
@@ -42,13 +29,14 @@ struct ContentView: View {
     }
 }
 
-// Update Preview Provider
+// Preview Provider might need adjustment if GameView requires specific setup
+// For now, let's keep it simple, assuming GameView initializes correctly.
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        // Provide a dummy AuthViewModel, potentially simulating a logged-in state
         let previewAuthViewModel = AuthViewModel()
-        // previewAuthViewModel.updateUserState(isAuthenticated: true, user: nil) // Example
-
+        // Simulate logged-in state for preview if needed
+        // previewAuthViewModel.currentUser = ... 
+        
         ContentView()
             .environmentObject(previewAuthViewModel)
     }

@@ -1,0 +1,65 @@
+ChessApp/
+├── README.md
+├── AppTemplate/
+│   ├── Info.plist
+│   ├── ContentView.swift          # Modified: Hosts the main GameView after login.
+│   ├── AppTemplateApp.swift       # SwiftUI App entry point (mostly unchanged).
+│   ├── Features/
+│   │   ├── Authentication/      # Existing Auth UI
+│   │   │   ├── SignUpView.swift
+│   │   │   └── LoginView.swift
+│   │   └── ChessGame/           # UI for the chess game
+│   │       ├── GameView.swift     # Main container view for the game, holding the ViewModel.
+│   │       ├── ChessBoardView.swift # Renders the board, pieces, highlights; handles taps.
+│   │       └── GameViewModel.swift  # Manages game state via GameLogic, handles UI interaction.
+│   ├── Secrets.Example.xcconfig
+│   ├── Secrets.xcconfig
+│   ├── Preview Content/
+│   ├── Core/
+│   │   ├── Auth/                # Existing Auth logic
+│   │   │   ├── AuthViewModel.swift
+│   │   │   ├── KeychainHelper.swift
+│   │   │   └── AuthRepository.swift # (Placeholder)
+│   │   ├── Database/            # Existing (Placeholder)
+│   │   │   └── DataRepository.swift # (Placeholder) // TODO: Implement if game history/stats persistence is needed
+│   │   ├── Supabase/            # Existing Supabase client
+│   │   │   └── SupabaseManager.swift
+│   │   ├── Chess/               # Core chess logic
+│   │   │   ├── Board.swift      # Represents the board state (squares, pieces).
+│   │   │   ├── Piece.swift      # Defines piece types, colors, SF Symbol names.
+│   │   │   ├── Move.swift       # Represents a move (start, end, special flags).
+│   │   │   └── GameLogic.swift  # Handles rules, move generation/validation, game state (turn, status).
+│   │   └── AI/                  # NEW: AI logic // TODO: Implement AI opponent
+│   │       ├── ChessEngine.swift  # Interface/Wrapper for the AI opponent engine // TODO: Create file
+│   │       └── CoachingAgent.swift # Analyzes moves and generates coaching feedback // TODO: Create file
+│   ├── Style/                   # Styling resources
+│   │   ├── StyleGuide.md        # Document defining colors, fonts, spacing, etc.
+│   │   └── Theme.swift          # (Optional) SwiftUI Theme definitions // TODO: Create file if needed
+│   └── Resources/               # Asset catalog, etc.
+│       └── Assets.xcassets      # For chess piece images, etc. // TODO: Create/Populate
+└── .gitignore
+
+---
+
+## Upcoming TODOs:
+
+1.  **AI Implementation (`Core/AI/`)**
+    *   Implement `ChessEngine.swift` (choose/wrap an engine like Stockfish or create a simpler one).
+    *   Integrate AI engine into `GameViewModel` to handle opponent turns.
+    *   Implement `CoachingAgent.swift` to analyze moves and provide feedback.
+2.  **UI Enhancements (`Features/ChessGame/`)**
+    *   Implement Pawn Promotion UI (e.g., ActionSheet in `GameView`).
+    *   Use proper image assets for pieces in `ChessBoardView` (requires populating `Resources/Assets.xcassets`).
+    *   Add display for captured pieces.
+    *   Add display for move history.
+    *   Integrate and display coaching hints from `CoachingAgent`.
+    *   Consider board orientation option.
+3.  **Game Logic Refinements (`Core/Chess/GameLogic.swift`)**
+    *   Implement draw detection (50-move rule, three-fold repetition - requires move history).
+    *   Implement draw detection for insufficient material.
+    *   Add move history tracking.
+    *   Add halfmove clock and fullmove number tracking.
+4.  **Persistence (`Core/Database/DataRepository.swift`)**
+    *   (Optional) Implement saving/loading game state or user stats using Supabase.
+5.  **Styling (`AppTemplate/Style/`)**
+    *   (Optional) Implement `Theme.swift` for more structured SwiftUI styling. 
